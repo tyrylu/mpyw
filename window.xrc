@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource class="">
+  <object class="wxFrame" name="myframe">
+    <title>M_text</title>
+    <style>wxCAPTION|wxRESIZE_BOX|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
+    <object class="wxStatusBar" name="stav"/>
+    <object class="wxTextCtrl" name="policko">
+      <size>1024,800</size>
+      <style>wxNO_BORDER|wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH|wxTE_LEFT</style>
+      <XRCED>
+        <events>EVT_TEXT|EVT_TEXT_ENTER|EVT_TEXT_URL|EVT_TEXT_MAXLEN||</events>
+        <assign_var>1</assign_var>
+      </XRCED>
+    </object>
+  </object>
+</resource>
