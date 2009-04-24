@@ -3,105 +3,70 @@ import wx
 import comtypes.client
 import versioninfo
 import  os
-import win32gui
 sapi = comtypes.client.CreateObject("SAPI.SPvoice")
 info = versioninfo.info()
 aboutInfo=u"kódové označení {0.name}, skutečné jméno {0.longName}, verze {0.version}. Jako popis je uvedeno {0.description}, k čemuž dodáváme, že url {0.url}. Licenční a copirightové texty vemte prosím následující: {0.copyrightInfo}".format(info)
-wildcard = u"Python soubory (*.py)|*.py|"     \
-           u"kompilované soubory (*.pyc)|*.pyc|" \
-           u"všechny soubory (*.*)|*.*"
+wildcard = u"Python soubory (*.py)|*.py|python soubory bez konzolových oken (*.pyw)|*.pyw|Textové soubory (*.txt)|*.txt|všechny druhy souborů (*.*)|*.*"
 
+def promptsave():
+	if policko.IsModified():
+		savestate = wx.MessageBox(u"Text souboru {0} se změnil. Uložit změny?".format(filename), u"Změna souboru {0}".format(os.path.basename(filename)), wx.YES_NO + wx.ICON_QUESTION, frame)
+		if savestate == wx.ID_YES:
+			saverequest(evt)
+	
 def readalltext(EVT):
-	global sapi, policko
 	sapi.speak(policko.GetValue())
 def readtoend(evt):
-	global sapi, policko
 	sapi.speak(policko.GetRange(policko.GetInsertionPoint(), policko.GetLastPosition()))
 def exit(evt):
-	global app, sapi, filename, policko
-	if policko.IsModified():
-		savestate = win32gui.MessageBox(0, u"Text souboru %s se změnil. Uložit změny?"%filename, u"Změna souboru", 35)
-		if savestate == 6:
-			saverequest(evt)
-			sapi.speak(u"Nashledanou uživateli se jménem %s. Doufám, že se ještě shledáme." % wx.GetUserName())	
-			app.ExitMainLoop()
-		elif savestate == 7:
-			sapi.speak(u"Nashledanou uživateli se jménem %s. Doufám, že se ještě shledáme." % wx.GetUserName())	
-			app.ExitMainLoop()
-	else:          
-		sapi.speak(u"Nashledanou uživateli se jménem %s. Doufám, že se ještě shledáme." % wx.GetUserName())	
-		app.ExitMainLoop()
+	promptsave()
+	sapi.speak(u"Nashledanou uživateli se jménem {0}. Doufám, že se ještě shledáme.".format(wx.GetUserName()))	
+	app.ExitMainLoop()
 def wintitle():
-	global frame, filename
-	frame.SetTitle("mtext - %s" % filename)
+	frame.SetTitle("mpyw - {0}".format(filename))
 def openrequest(evt):
-	global frame, policko, filename
-	if policko.IsModified():
-		savestate = win32gui.MessageBox(0, u"Text souboru %s se změnil. Uložit změny?"%filename, u"Změna souboru", 35)
-		if savestate == 6:
-			saverequest(evt)
-			filename = ""
-			policko.Clear()
-			wintitle()
-		elif savestate == 7:
-			filename = ""
-	dlg = wx.FileDialog(frame,u"Zvolte si soubor k otevření", os.getcwd(), wildcard=wildcard, style=wx.OPEN | wx.CHANGE_DIR| wx.FD_FILE_MUST_EXIST)
-	if dlg.ShowModal() == wx.ID_OK:
-		path = dlg.GetPath()
+	promptsave()
+	path = wx.FileSelector(u"Zvolte si soubor k otevření", wildcard=wildcard, flags=wx.OPEN + wx.FD_FILE_MUST_EXIST, parent=frame)
+	if  path != "":
+		policko.Clear()
+
+
+
 		filename = path
 		policko.LoadFile(path)
-		wintitle()
-	dlg.Destroy()
+
 def saveasrequest(evt):
-	global frame, policko, filename
-	dlg = wx.FileDialog(frame,u"Zvolte jméno, pod kterým bude soubor uložen", os.getcwd(), wildcard=wildcard, style=wx.SAVE)
-	if dlg.ShowModal() == wx.ID_OK:
-		path = dlg.GetPath()
-		policko.SaveFile(path)
-		filename = path
-		wintitle()
+	global filename
+	path = wx.FileSelector(u"Zvolte jméno, pod kterým bude soubor uložen", wildcard=wildcard, flags=wx.SAVE, parent=frame).encode("windows-1250")
+	policko.SaveFile(path)
+	filename = path
 	dlg.Destroy()
 def saverequest(evt):
-	global policko, filename
 	if filename == "":
 		saveasrequest(evt)
 	elif policko.IsModified() and filename != "":
 		policko.SaveFile(filename)      
 def printrequest(EVT):
-	win32gui.MessageBox(0, u"Funkce je zatím nedostupná, vyčkejte aktualizace.", u"beta", 64)
+	wx.MessageBox(u"Funkce je zatím nedostupná, vyčkejte aktualizace.", u"alpha", wx.ICON_INFORMATION)
 def aboutrequest(EVT):
-	win32gui.MessageBox(0, aboutInfo, u"O programu", 64)
+	wx.MessageBox(aboutInfo, u"O programu", wx.ICON_INFORMATION)
 def helprequest(EVT):
-	win32gui.MessageBox(0, u"Pokud teď čekáte hromadu pokynů, jste na špatném místě. Pokyny jsou jednoduché: Napište něco do políčka  a stiskněte tlačítko. Určitě příjdete na to, které...", "pokyny", 64)                
+	wx.MessageBox(u"Pokud teď čekáte hromadu pokynů, jste na špatném místě. Ale kdyby jste přeci jen něco chtěli skusit najít, tak na http://mpyw.googlecode.com možná něco najdete.", "pokyny", wx.ICON_INFORMATION)                
 def prinacteni(EVT):
  global policko    
  policko.SetFocus()
 def kopirovat(EVT):
-	global policko    
 	policko.Copy()
 def vyjmout(evt):
-	global policko    
 	policko.Cut()
 def vlozit(evt):
-	global policko
 	policko.Paste()
 def newfilerequest(evt):
 	global filename, policko
-	if policko.IsModified():
-		savestate = win32gui.MessageBox(0, u"Text souboru %s se změnil. Uložit změny?"%filename, u"Změna souboru", 35)
-		if savestate == 6:
-			saverequest(evt)
-			filename = ""
-			policko.Clear()
-			wintitle()
-		elif savestate == 7:
-			filename = ""
-			policko.Clear()
-			wintitle()
-	else:
-		filename = ""
-		policko.Clear()
-		wintitle()
+	promptsave()
+	filename = ""
+	policko.Clear()
+	wintitle()
 def updatestatusbar(evt):
 	#Kvůli otravnému chování událostí klávesnice, musí se ošetřovat stisk alt a f10 jinak...
 	sloupec, radek = policko.PositionToXY(policko.GetInsertionPoint())
