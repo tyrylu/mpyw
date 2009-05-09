@@ -1,7 +1,7 @@
-﻿# -- coding: UTF-8 --
+# -- coding: UTF-8 --
 # asi milion importů všeho možného...
 import wx
-filename = ""
+
 app = wx.PySimpleApp()
 locale = wx.Locale(wx.LANGUAGE_DEFAULT)
 from window import *
@@ -9,7 +9,7 @@ import eventhandlers
 eventhandlers.app = app
 eventhandlers.frame = frame
 eventhandlers.policko = policko
-eventhandlers.filename = filename
+eventhandlers.filename = ""
 eventhandlers.stav = stav
 eventhandlers.mymenubar = mymenubar
 

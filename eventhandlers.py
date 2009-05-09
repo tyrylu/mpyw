@@ -1,9 +1,8 @@
 ﻿# -- coding: UTF-8 --
 import wx
-import comtypes.client
+import utils
 import versioninfo
 import  os
-sapi = comtypes.client.CreateObject("SAPI.SPvoice")
 info = versioninfo.info()
 aboutInfo=u"kódové označení {0.name}, skutečné jméno {0.longName}, verze {0.version}. Jako popis je uvedeno {0.description}, k čemuž dodáváme, že url {0.url}. Licenční a copirightové texty vemte prosím následující: {0.copyrightInfo}".format(info)
 wildcard = u"Python soubory (*.py)|*.py|python soubory bez konzolových oken (*.pyw)|*.pyw|Textové soubory (*.txt)|*.txt|všechny druhy souborů (*.*)|*.*"
@@ -15,13 +14,14 @@ def promptsave():
 			saverequest(evt)
 	
 def readalltext(EVT):
-	sapi.speak(policko.GetValue())
+	utils.speak(policko.GetValue())
 def readtoend(evt):
-	sapi.speak(policko.GetRange(policko.GetInsertionPoint(), policko.GetLastPosition()))
+	utils.speak(policko.GetRange(policko.GetInsertionPoint(), policko.GetLastPosition()))
 def exit(evt):
 	promptsave()
-	sapi.speak(u"Nashledanou uživateli se jménem {0}. Doufám, že se ještě shledáme.".format(wx.GetUserName()))	
+	utils.speak(u"Nashledanou uživateli se jménem {0}. Doufám, že se ještě shledáme.".format(wx.GetUserName()))	
 	app.ExitMainLoop()
+
 def wintitle():
 	frame.SetTitle("mpyw - {0}".format(filename))
 def openrequest(evt):
