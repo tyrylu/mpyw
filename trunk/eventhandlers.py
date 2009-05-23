@@ -4,6 +4,7 @@ import utils
 import versioninfo
 import  os
 info = versioninfo.info()
+search_dialog = None
 aboutInfo=u"kódové označení {0.name}, skutečné jméno {0.longName}, verze {0.version}. Jako popis je uvedeno {0.description}, k čemuž dodáváme, že url {0.url}. Licenční a copirightové texty vemte prosím následující: {0.copyrightInfo}".format(info)
 wildcard = u"Python soubory (*.py)|*.py|python soubory bez konzolových oken (*.pyw)|*.pyw|Textové soubory (*.txt)|*.txt|všechny druhy souborů (*.*)|*.*"
 
@@ -71,8 +72,31 @@ def updatestatusbar(evt):
 	#Kvůli otravnému chování událostí klávesnice, musí se ošetřovat stisk alt a f10 jinak...
 	sloupec, radek = policko.PositionToXY(policko.GetInsertionPoint())
 	stav.SetStatusText(u"Řádek {0}, sloupec {1}".format(radek + 1, sloupec + 1))
+	searchitem.Enable(len(policko.GetValue()) != 0)
 	evt.Skip()
 def gotoline(evt):
 	radek = wx.GetNumberFromUser(u"Vložte číslo řádku, na který chcete přejít.", u"číslo řádku", u"přejít na řádek", 1, parent=frame, min=1, max=policko.GetNumberOfLines())
 	pos = policko.XYToPosition(0, radek - 1)
 	policko.SetInsertionPoint(pos)
+def perform_search(evt):
+	text = search_dialog.FindWindowByName("what").GetValue()
+	if text == "":
+		wx.MessageBox(u"Nelze vyhledávat, nebylo specifikováno hledané.", u"Nelze pokračovat", wx.ICON_ERROR, search_dialog)
+	else:
+		if search_dialog.FindWindowByName("re").GetValue():
+			pos = utils.find_by_regex(text, policko.GetValue(), search_dialog.FindWindowByName("case").GetValue())
+		else:
+			pos = utils.find(text, policko.GetValue(), search_dialog.FindWindowByName("case").GetValue())
+		if pos >= 0:
+			policko.SetInsertionPoint(pos)
+			search_dialog.Hide()
+		elif pos == -1:
+			wx.MessageBox(u"Hledaný text nebyl nalezen.", u"Nenalezeno", wx.ICON_ERROR, search_dialog)
+		elif pos == -2:
+			wx.MessageDialog(u"Vložený regulární výraz není syntakticky správný.", u"Neplatný regulární výraz", wx.ICON_ERROR, search_dialog)
+def startsearch(evt):
+	global search_dialog
+	search_dialog = file.LoadDialog(frame, "searchdialog")
+	search_dialog.FindWindowByName("find").Bind(wx.EVT_BUTTON, perform_search)
+	search_dialog.FindWindowByName("cancel").Bind(wx.EVT_BUTTON, lambda evt: search_dialog.Hide())
+	search_dialog.ShowModal()
