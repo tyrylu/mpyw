@@ -11,8 +11,8 @@ eventhandlers.frame = frame
 eventhandlers.policko = policko
 eventhandlers.filename = ""
 eventhandlers.stav = stav
-eventhandlers.mymenubar = mymenubar
-
+eventhandlers.searchitem = searchitem
+eventhandlers.file = file
 frame.Maximize()
 frame.Bind(wx.EVT_ACTIVATE, eventhandlers.prinacteni)
 frame.Bind(wx.EVT_MENU, eventhandlers.newfilerequest, id=149)
@@ -26,6 +26,7 @@ frame.Bind(wx.EVT_MENU, eventhandlers.vlozit, id=12)
 frame.Bind(wx.EVT_MENU, eventhandlers.kopirovat, id=11)
 frame.Bind(wx.EVT_MENU, eventhandlers.vlozit, id=12)
 frame.Bind(wx.EVT_MENU, eventhandlers.gotoline, id=13)
+frame.Bind(wx.EVT_MENU, eventhandlers.startsearch, id=14)
 frame.Bind(wx.EVT_MENU, eventhandlers.readalltext, id=205)
 frame.Bind(wx.EVT_MENU, eventhandlers.readtoend, id=206)
 frame.Bind(wx.EVT_MENU, eventhandlers.aboutrequest, id=102)
