@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <resource class="">
   <object class="wxFrame" name="myframe">
-    <title>M_text</title>
+    <title>M_pyw</title>
     <style>wxCAPTION|wxRESIZE_BOX|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
     <object class="wxStatusBar" name="stav"/>
     <object class="wxTextCtrl" name="policko">
