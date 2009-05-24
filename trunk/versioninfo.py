@@ -2,7 +2,7 @@
 class info():
 	name="PY		W"
 	longName=	"Python editor for the blind"
-	version="1.	01 r55"
+	version="1.01 r6"
 	description=	u"Zdrojově otevřený python editor"
 	url=u"nemáme"	
 	copyrightInfo=u"""Copy	right (C) 2008 Pavel Vlček a Lukáš Tyrychtr 
