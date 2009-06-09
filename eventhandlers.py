@@ -15,16 +15,16 @@ def promptsave():
 			saverequest(evt)
 	
 def readalltext(EVT):
-	utils.speak(policko.GetValue())
+	utils.speak(policko.Value)
 def readtoend(evt):
-	utils.speak(policko.GetRange(policko.GetInsertionPoint(), policko.GetLastPosition()))
+	utils.speak(policko.GetRange(policko.InsertionPoint, policko.LastPosition))
 def exit(evt):
 	promptsave()
 	utils.speak(u"Nashledanou uživateli se jménem {0}. Doufám, že se ještě shledáme.".format(wx.GetUserName()))	
 	app.ExitMainLoop()
 
 def wintitle():
-	frame.SetTitle("mpyw - {0}".format(filename))
+	frame.Title = "mpyw - {0}".format(filename)
 def openrequest(evt):
 	promptsave()
 	path = wx.FileSelector(u"Zvolte si soubor k otevření", wildcard=wildcard, flags=wx.OPEN + wx.FD_FILE_MUST_EXIST, parent=frame)
@@ -70,25 +70,25 @@ def newfilerequest(evt):
 	wintitle()
 def updatestatusbar(evt):
 	#Kvůli otravnému chování událostí klávesnice, musí se ošetřovat stisk alt a f10 jinak...
-	sloupec, radek = policko.PositionToXY(policko.GetInsertionPoint())
-	stav.SetStatusText(u"Řádek {0}, sloupec {1}".format(radek + 1, sloupec + 1))
-	searchitem.Enable(len(policko.GetValue()) != 0)
+	sloupec, radek = policko.PositionToXY(policko.InsertionPoint)
+	stav.StatusText = u"Řádek {0}, sloupec {1}".format(radek + 1, sloupec + 1)
+	searchitem.Enable(len(policko.Value) != 0)
 	evt.Skip()
 def gotoline(evt):
-	radek = wx.GetNumberFromUser(u"Vložte číslo řádku, na který chcete přejít.", u"číslo řádku", u"přejít na řádek", 1, parent=frame, min=1, max=policko.GetNumberOfLines())
+	radek = wx.GetNumberFromUser(u"Vložte číslo řádku, na který chcete přejít.", u"číslo řádku", u"přejít na řádek", 1, parent=frame, min=1, max=policko.NumberOfLines)
 	pos = policko.XYToPosition(0, radek - 1)
-	policko.SetInsertionPoint(pos)
+	policko.InsertionPoint = pos
 def perform_search(evt):
-	text = search_dialog.FindWindowByName("what").GetValue()
+	text = search_dialog.FindWindowByName("what").Value
 	if text == "":
 		wx.MessageBox(u"Nelze vyhledávat, nebylo specifikováno hledané.", u"Nelze pokračovat", wx.ICON_ERROR, search_dialog)
 	else:
-		if search_dialog.FindWindowByName("re").GetValue():
-			pos = utils.find_by_regex(text, policko.GetValue(), search_dialog.FindWindowByName("case").GetValue())
+		if search_dialog.FindWindowByName("re").Value:
+			pos = utils.find_by_regex(text, policko.Value, search_dialog.FindWindowByName("case").Value)
 		else:
-			pos = utils.find(text, policko.GetValue(), search_dialog.FindWindowByName("case").GetValue())
+			pos = utils.find(text, policko.Value, search_dialog.FindWindowByName("case").Value)
 		if pos >= 0:
-			policko.SetInsertionPoint(pos)
+			policko.InsertionPoint = pos
 			search_dialog.Hide()
 		elif pos == -1:
 			wx.MessageBox(u"Hledaný text nebyl nalezen.", u"Nenalezeno", wx.ICON_ERROR, search_dialog)
