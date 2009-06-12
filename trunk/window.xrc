@@ -12,6 +12,77 @@
         <assign_var>1</assign_var>
       </XRCED>
     </object>
+    <object class="wxMenuBar" name="mainmenu">
+      <object class="wxMenu" name="file">
+        <object class="wxMenuItem" name="newfile">
+          <label>Nový soubor...</label>
+          <accel>ctrl+n</accel>
+        </object>
+        <object class="wxMenuItem" name="openfile">
+          <label>Otevřít...</label>
+          <accel>ctrl+o</accel>
+        </object>
+        <object class="wxMenuItem" name="savefile">
+          <label>Uložit</label>
+          <accel>ctrl+s</accel>
+        </object>
+        <object class="wxMenuItem" name="saveasfile">
+          <label>Uložit jako...</label>
+          <accel>ctrl+shift+s</accel>
+        </object>
+        <object class="wxMenuItem" name="exit">
+          <label>Konec</label>
+          <accel>ctrl+q</accel>
+        </object>
+        <label>soubor</label>
+      </object>
+      <object class="wxMenu" name="edit">
+        <label>úpravy</label>
+        <object class="wxMenuItem" name="copy">
+          <label>Kopírovat</label>
+          <accel>ctrl+c</accel>
+        </object>
+        <object class="wxMenuItem" name="cut">
+          <label>Vyjmout</label>
+          <accel>ctrl+x</accel>
+        </object>
+        <object class="wxMenuItem" name="paste">
+          <label>Vložit</label>
+          <accel>ctrl+v</accel>
+        </object>
+        <object class="wxMenuItem" name="search">
+          <label>Najít...</label>
+          <accel>ctrl+f</accel>
+          <enabled>0</enabled>
+        </object>
+        <object class="wxMenuItem" name="gotoline">
+          <label>Přejít na řádek...</label>
+          <accel>ctrl+g</accel>
+        </object>
+      </object>
+      <object class="wxMenu" name="speak">
+        <label>řeč</label>
+        <object class="wxMenuItem" name="readall">
+          <label>Přečíst celý text</label>
+          <accel>ctrl+shift+r</accel>
+        </object>
+        <object class="wxMenuItem" name="read">
+          <label>Přečíst od aktuální pozice</label>
+          <accel>ctrl+r</accel>
+        </object>
+      </object>
+      <object class="wxMenu" name="help">
+        <label>nápověda</label>
+        <object class="wxMenuItem" name="help">
+          <label>Nápověda</label>
+          <accel>f1</accel>
+        </object>
+        <object class="wxMenuItem" name="about">
+          <label>O aplikaci...</label>
+          <accel>ctrl+f1</accel>
+        </object>
+      </object>
+    </object>
   </object>
   <object class="wxDialog" name="searchdialog">
     <object class="wxPanel">
@@ -55,7 +126,6 @@
   </object>
   <object class="wxDialog" name="voicesettings">
     <object class="wxPanel">
-      
       <object class="wxBoxSizer">
         <orient>wxVERTICAL</orient>
         <object class="sizeritem">
