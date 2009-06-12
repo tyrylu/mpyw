@@ -1,6 +1,6 @@
 import configobj, re
 conf = configobj.ConfigObj("mpyw.ini")
-if conf.as_bool("speech_allowed"):
+if conf["speech"].as_bool("allowed"):
 	import comtypes.client
 	sapi = comtypes.client.CreateObject("SAPI.SPvoice")
 
