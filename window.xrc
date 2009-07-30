@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource class="">
   <object class="wxFrame" name="myframe">
-    <title>M_pyw</title>
+    <title>M-pyw</title>
     <style>wxCAPTION|wxRESIZE_BOX|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
-    <object class="wxStatusBar" name="stav"/>
-    <object class="wxTextCtrl" name="policko">
-      <size>1024,800</size>
-      <style>wxNO_BORDER|wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH|wxTE_LEFT</style>
-      <XRCED>
-        <events>EVT_TEXT|EVT_TEXT_ENTER|EVT_TEXT_URL|EVT_TEXT_MAXLEN||</events>
-        <assign_var>1</assign_var>
-      </XRCED>
-    </object>
     <object class="wxMenuBar" name="mainmenu">
       <object class="wxMenu" name="file">
         <object class="wxMenuItem" name="newfile">
@@ -38,6 +29,18 @@
       </object>
       <object class="wxMenu" name="edit">
         <label>úpravy</label>
+        <object class="wxMenuItem" name="undo">
+          <label>Zpět</label>
+          <accel>ctrl+z</accel>
+        </object>
+        <object class="wxMenuItem" name="redo">
+          <label>Vpřed</label>
+          <accel>ctrl+y</accel>
+        </object>
+        <object class="wxMenuItem" name="selectall">
+          <label>Vybrat vše</label>
+          <accel>ctrl+a</accel>
+        </object>
         <object class="wxMenuItem" name="copy">
           <label>Kopírovat</label>
           <accel>ctrl+c</accel>
@@ -59,6 +62,17 @@
           <label>Přejít na řádek...</label>
           <accel>ctrl+g</accel>
         </object>
+        <object class="wxMenu" name="indentation">
+          <object class="wxMenuItem" name="increaseindent">
+            <label>Zvětšit</label>
+            <accel>tab</accel>
+          </object>
+          <object class="wxMenuItem" name="decreaseindent">
+            <label>Zmenšit</label>
+            <accel>shift+tab</accel>
+          </object>
+          <label>Odsazení</label>
+        </object>
       </object>
       <object class="wxMenu" name="speak">
         <label>řeč</label>
@@ -69,6 +83,10 @@
         <object class="wxMenuItem" name="read">
           <label>Přečíst od aktuální pozice</label>
           <accel>ctrl+r</accel>
+        </object>
+        <object class="wxMenuItem" name="sayindentlevel">
+          <label>Úroveň odsazení</label>
+          <accel>alt+i</accel>
         </object>
       </object>
       <object class="wxMenu" name="help">
@@ -83,6 +101,10 @@
         </object>
       </object>
     </object>
+    <object class="wxTextCtrl" name="policko">
+      <style>wxTE_MULTILINE</style>
+    </object>
+    <object class="wxStatusBar" name="stav"/>
   </object>
   <object class="wxDialog" name="searchdialog">
     <object class="wxPanel">
