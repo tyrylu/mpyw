@@ -1,12 +1,13 @@
 ﻿# -- coding: UTF-8 --
 import wx
 from wx import xrc
-file = xrc.XmlResource("window.xrc")
+import globals
+globals.file = xrc.XmlResource("window.xrc")
 # Načtení hlavního okénečka
-frame = file.LoadFrame(None, "myframe")
+globals.frame = globals.file.LoadFrame(None, "myframe")
 # Vytvoření wx objektů(kvůli přístupu k vlastnostem, nebo kvůli navázání událostí)) 
-policko = xrc.XRCCTRL(frame, "policko")
-stav = xrc.XRCCTRL(frame, "stav")
-stav.StatusText  =u"Řádek 1 sloupec 1"
+globals.policko = xrc.XRCCTRL(globals.frame, "policko")
+globals.stav = xrc.XRCCTRL(globals.frame, "stav")
+globals.stav.StatusText  =u"Řádek 1 sloupec 1"
 # vytvoření menu
-searchitem = frame.MenuBar.FindItemById(xrc.XRCID("search"))
+globals.searchitem = globals.frame.MenuBar.FindItemById(xrc.XRCID("search"))
