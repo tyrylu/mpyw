@@ -71,30 +71,31 @@ def speak_indent(evt):
 	utils.speak(u"Úroveň {0}".format(utils.get_indent_level(text)))
 
 def edit_increase_indent(evt):
+	expr = re.compile("^", re.U + re.M)
 	start = globals.policko.Selection[0]
 	end = globals.policko.Selection[1]
 	if start == end:
+		#Some selection, indent in it
 		lineno = globals.policko.PositionToXY(globals.policko.InsertionPoint)[1]
-		
 		start = globals.policko.XYToPosition(0, lineno)
 		len = globals.policko.GetLineLength(lineno)
 		end = start + len
 	text = globals.policko.GetRange(start, end)
-	text = re.sub("^", globals.conf["indent"]["unit"], text, re.M + re.U)
+	text = expr.sub(globals.conf["indent"]["unit"], text)
 	globals.policko.Replace(start, end, text)
 	utils.speak(u"Úroveň {0}".format(utils.get_indent_level(text)))
 
 def edit_decrease_indent(evt):
+	expr = re.compile("^%s"%globals.conf["indent"]["unit"], re.U + re.M)
 	start = globals.policko.Selection[0]
 	end = globals.policko.Selection[1]
 	if start == end:
 		lineno = globals.policko.PositionToXY(globals.policko.InsertionPoint)[1]
-		
 		start = globals.policko.XYToPosition(0, lineno)
 		len = globals.policko.GetLineLength(lineno)
 		end = start + len
 	text = globals.policko.GetRange(start, end)
-	text = re.sub("^%s"%globals.conf["indent"]["unit"], "", text, re.M + re.U)
+	text = expr.sub("", text)
 	globals.policko.Replace(start, end, text)
 	utils.speak(u"Úroveň {0}".format(utils.get_indent_level(text)))
 
