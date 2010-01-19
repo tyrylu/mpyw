@@ -2,12 +2,10 @@
 import re
 import os.path
 
-
 import wx
-
 import uievents.mainmenu
-import globals
-if globals.conf["speech"].as_bool("allowed"):
+import appenv
+if appenv.conf["speech"].as_bool("allowed"):
 	import comtypes.client
 	sapi = comtypes.client.CreateObject("SAPI.SPvoice")
 
@@ -35,7 +33,7 @@ def find_by_regex(regex, text, case):
 	res = reg.search(text)
 	return res.start() or -1
 def get_indent_level(text):
-	char = globals.conf["indent"]["unit"]
+	char = appenv.conf["indent"]["unit"]
 	char = eval("\"%s\"\n"%char)
 	charlen = len(char)
 	levels = 0
@@ -47,10 +45,10 @@ def get_indent_level(text):
 			text = text[charlen:]
 	return levels
 def promptsave():
-	if globals.policko.IsModified():
-		savestate = wx.MessageBox(u"Text souboru {0} se zmÄ›nil. UloĹľit zmÄ›ny?".format(globals.filename), u"ZmÄ›na souboru {0}".format(os.path.basename(globals.filename)), wx.YES_NO + wx.ICON_QUESTION, globals.frame)
+	if appenv.policko.IsModified():
+		savestate = wx.MessageBox(u"Text souboru {0} se zmÄ›nil. UloĹľit zmÄ›ny?".format(appenv.filename), u"ZmÄ›na souboru {0}".format(os.path.basename(appenv.filename)), wx.YES_NO + wx.ICON_QUESTION, appenv.frame)
 		if savestate == wx.ID_YES:
 			uievents.mainmenu.on_file_save(evt)
 
 def update_window_title():
-	globals.frame.Title = "mpyw - {0}".format(globals.filename)
+	appenv.frame.Title = "mpyw - {0}".format(appenv.filename)
