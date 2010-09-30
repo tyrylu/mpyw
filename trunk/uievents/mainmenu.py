@@ -5,14 +5,17 @@ import utils
 import versioninfo
 import uievents.searchdialog
 import  os
-info = versioninfo.info()
 import appenv
+info = versioninfo.info()
 aboutInfo=u"koukavé označení {0.name}, skutečné jméno {0.longName}, verze {0.version}. Jako popis je uvedeno {0.description}, k čemuž dodáváme, že url {0.url}. Licenční a copirightové texty vemte prosím následující: {0.copyrightInfo}".format(info)
 wildcard = u"Python soubory (*.py)|*.py|python soubory bez konzolových oken (*.pyw)|*.pyw|Textové soubory (*.txt)|*.txt|všechny druhy souborů (*.*)|*.*"
+
 def speak_read_all(EVT):
 	utils.speak(appenv.policko.Value)
+
 def speak_read_to_end(evt):
 	utils.speak(appenv.policko.GetRange(appenv.policko.InsertionPoint, appenv.policko.LastPosition))
+
 def exit(evt):
 	utils.promptsave()
 	utils.speak(u"Nashledanou uživateli se jménem {0}. Doufám, že se ještě shledáme.".format(wx.GetUserName()))	

@@ -3,6 +3,12 @@
   <object class="wxFrame" name="myframe">
     <title>M-pyw</title>
     <style>wxCAPTION|wxRESIZE_BOX|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
+    <title>M-pyw</title>
+    <style>wxCAPTION|wxRESIZE_BOX|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
+    <object class="wxStatusBar" name="stav"/>
+    <object class="wxTextCtrl" name="policko">
+      <style>wxTE_MULTILINE</style>
+    </object>
     <object class="wxMenuBar" name="mainmenu">
       <object class="wxMenu" name="file">
         <object class="wxMenuItem" name="newfile">
@@ -101,10 +107,6 @@
         </object>
       </object>
     </object>
-    <object class="wxTextCtrl" name="policko">
-      <style>wxTE_MULTILINE</style>
-    </object>
-    <object class="wxStatusBar" name="stav"/>
   </object>
   <object class="wxDialog" name="searchdialog">
     <object class="wxPanel">
@@ -196,4 +198,6 @@
       </object>
     </object>
   </object>
+
+  
 </resource>
